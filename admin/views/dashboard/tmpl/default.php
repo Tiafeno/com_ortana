@@ -24,7 +24,7 @@ defined('_JEXEC') or die('Restricted Access');
 		<tfoot>
 			<tr>
 				<td colspan="5">
-					<?php  //echo $this->pagination->getListFooter(); ?>
+					<?php  echo $this->pagination->getListFooter(); ?>
 				</td>
 			</tr>
 		</tfoot>
@@ -34,16 +34,16 @@ defined('_JEXEC') or die('Restricted Access');
 
 					<tr>
 						<td>
-							<?php// echo $this->pagination->getRowOffset($i); ?>
+							<?php echo $this->pagination->getRowOffset($i); ?>
 						</td>
 						<td>
 							<?php echo JHtml::_('grid.id', $i, $row->id); ?>
 						</td>
 						<td>
-							<?php echo $row->greeting; ?>
+							<?php echo $row->title; ?>
 						</td>
 						<td align="center">
-							<?php echo JHtml::_('jgrid.published', $row->published, $i, 'dashboard.', true, 'cb'); ?>
+							<?php echo JHtml::_('jgrid.published', $row->cost, $i, 'dashboard.', true, 'cb'); ?>
 						</td>
 						<td align="center">
 							<?php echo $row->id; ?>
