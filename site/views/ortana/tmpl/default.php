@@ -12,6 +12,10 @@ $document->addScriptOptions('com_ortana', [
   'ajax_url' => $url->toString()
 ]);
 ?>
-<div ng-app="OApp" ng-controller="OController">
-  <div ng-view></div>
+<div class="item-page" itemscope="" itemtype="https://schema.org/Article">
+  <div itemprop="articleBody">
+    <div ng-app="ortanaApp" ng-controller="ortanaCtrl">
+      <div ng-view></div>
+    </div>
+  </div>
 </div>

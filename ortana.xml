@@ -8,7 +8,7 @@
 	<authorUrl>http://www.falicrea.com</authorUrl>
 	<copyright>Copyright 2017, ORTANA</copyright>
 	<license>Apache License 2.0</license>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<description>Description of the Ortana component ...</description>
 
 	<install> <!-- Runs on install -->
