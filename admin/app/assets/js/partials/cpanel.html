@@ -1,0 +1,75 @@
+<h2> Ajouter une articles </h2>
+<md-progress-linear ng-show="progressbar" md-mode="indeterminate"></md-progress-linear>
+<div layout="row">
+  <div flex="30">
+    <md-content  layout-padding>
+      <div>
+        <form name="tarifForm" ng-submit="saveTarifs( tarifForm.$valid )" novalidate>
+
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Titre</label>
+              <input ng-cust name="title" ng-model="tarif.title" required>
+              <div ng-messages="tarifForm.title.$error" role="alertdialog">
+                  <div ng-message="required">Veuillez ajouter une titre pour cette article.</div>
+                </div>
+            </md-input-container>
+  
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Prix</label>
+              <input ng-cust name="cost" ng-model="tarif.cost" ng-pattern="/^[0-9]*$/" required>
+              <div ng-messages="tarifForm.cost.$error" role="alertdialog">
+                <div ng-message="required">Veuillez ajouter un prix pour cette article.</div>
+                <div ng-message="pattern">Seulement les chiffres sont autoriser.</div>
+              </div>
+            </md-input-container>
+          </div>
+  
+  
+          <md-input-container class="md-block">
+            <label>Description</label>
+            <textarea name="description" ng-model="tarif.description" md-maxlength="500" rows="5" md-select-on-focus></textarea>
+          </md-input-container>
+          <md-button type="submit"  ng-disabled="tarifForm.$invalid" class="md-raised md-primary">Ajouter</md-button>
+        </form>
+      </div>
+    </md-content>
+  </div>
+  <div flex="70">
+    <md-content class="md-padding" layout-xs="column" layout="column">
+      <div >
+        <md-card class="floating" ng-repeat="article in articles track by article.id">
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline"> {{ article.title }}</span>
+            </md-card-title-text>
+          </md-card-title>
+          <md-card-content>
+            <p>Prix: {{ article.cost | currency : "Ar " }}</p>
+            <p>{{ article.description }}</p>
+            <p>
+          </md-card-content>
+          <md-card-actions layout="row" layout-align="end center">
+            <md-menu>
+              <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="openMenu($mdMenu, $event)">
+                  <i class="material-icons">menu</i>
+              </md-button>
+              <md-menu-content width="4">
+                <md-menu-item>
+                  <md-button ort-delete="{{ article.id }}">
+                    Supprimer
+                  </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button ort-edit="{{ article.id }}">
+                    Ajouter des rubrics
+                  </md-button>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+          </md-card-actions>
+        </md-card>
+      </div>
+    </md-content>
+  </div>
+</div>

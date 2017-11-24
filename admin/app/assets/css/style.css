@@ -1,0 +1,15 @@
+.ng-scope p, .ng-scope span, .ng-scope a,
+input, button, select, textarea, .ng-scope div {
+  font-family: Roboto,Helvetica Neue,sans-serif !important;
+}
+.floating {
+  width: 250px;
+  display: inline-block;
+}
+md-dialog {
+  min-width: 840px;
+}
+md-dialog.md-transition-in, md-dialog.md-transition-out {
+  -webkit-transition: all .4s cubic-bezier(.25,.8,.25,1);
+  transition: all .4s cubic-bezier(.25,.8,.25,1);
+}

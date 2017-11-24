@@ -6,7 +6,10 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
+
+JLoader::register('comDocument', JPATH_COMPONENT . '/app/inc/document.inc.php');
 JLoader::register('comOrtanaHelper', JPATH_COMPONENT . '/helpers/helper.php');
+
 $controller = JControllerLegacy::getInstance('Ortana');
 
 $input = JFactory::getApplication()->input;

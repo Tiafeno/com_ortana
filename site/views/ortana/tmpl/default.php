@@ -7,7 +7,7 @@ JHtml::_('jquery.framework');
 $url = JUri::getInstance(); 
 $document = JFactory::getDocument();
 $document->addScriptOptions('com_ortana', [
-  'assets' => JUri::base() . 'modules/mod_ortana/app/assets/',
+  'assets' => JPATH_COMPONENT . '/app/assets/',
   'articles' => json_encode($this->articles),
   'ajax_url' => $url->toString()
 ]);

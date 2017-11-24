@@ -1,0 +1,49 @@
+<md-dialog class="md-transition-in" aria-label="Mango (Fruit)">
+    <form ng-cloak>
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <h2>Modification</h2>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-click="hide()">
+            <i class="material-icons">close</i>
+          </md-button>
+        </div>
+      </md-toolbar>
+
+      <md-dialog-content>
+        <div layout="row">
+          <div flex="60">
+            <md-content class="md-padding" layout-xs="column" layout="column"></md-content>
+              <md-list ng-cloak>
+                <md-list-item ng-repeat="field in fields" class="noright">
+                  <p>{{ field }}</p>
+                  <md-icon class="md-secondary" ><i ng-click="deleteField( field )" class="material-icons" style="cursor: pointer">delete</i></md-icon>
+                </md-list-item>
+              </md-list>
+            </md-content>
+          </div>
+          <div flex="40">
+            <md-content class="md-padding" layout-xs="column" layout="column">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Field</label>
+                <input md-maxlength="50" required name="name" ng-model="inputField" />
+                <div class="hint" >Tell us what we should call you!</div>
+              </md-input-container>
+      
+              <div><md-button ng-click="submitField( fieldForm.$valid )" class="md-raised md-primary">Ajouter</md-button></div>
+            </md-content>
+          </div>
+        </div>
+      </md-dialog-content>
+
+      <md-dialog-actions layout="row">
+          <span flex></span>
+          <md-button ng-click="hide()">
+            Annuler
+          </md-button>
+          <md-button ng-click="saveField()">
+            Enregistrer
+          </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
