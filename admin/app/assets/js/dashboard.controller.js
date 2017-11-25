@@ -43,7 +43,7 @@ dashboard
       if (_.isNull( config )) 
         return config = Joomla.getOptions( 'com_ortana' );
     };
-    self.setEditArticle = function( id ) { editId = id; };
+    self.setEditArticle = function( id ) { editId = parseInt(id); };
     self.getEditId = function() { return editId; }
     self.resetEdit = function() { return editId = NaN; }
 

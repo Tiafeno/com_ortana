@@ -30,10 +30,80 @@ routeDashboard
       $mdMenu.open(ev);
     };
 
+    /**
+     * This function update fields database
+     * @param {int} article_id 
+     * @return {Promise}
+     */
+    $scope.updateFields = function( article_id ) {
+      return new Promise(function(resolve, reject) {
+        if ( ! _.isNumber( article_id )) reject( "Variable article_id is not a number" );
+        var fields = $scope.getFields( article_id );
+        var fieldsJoin = fields.join("|");
+        var Form = new FormData();
+        Form.append('option', 'com_ajax');
+        Form.append('plugin', 'tarifs');
+        Form.append('method', 'updateFields');
+  
+        Form.append('id', parseInt(article_id));
+        Form.append('fields', fieldsJoin);
+  
+        Form.append('format', 'json');
+        $scope.toggleProgress();
+        dashboardFactory.formHttp( Form )
+          .then( function successCallback( results ) {
+            $scope.toggleProgress();
+            var rq = results.data;
+            if (rq.success){
+              resolve( rq.data );
+            }
+          })
+      });
+    };
+
+    /**
+     * Update article content
+     * @param {int} article_id 
+     * @return {Promise}
+     */
+    $scope.updateTarifs = function( article_id ) {
+      return new Promise(function(resolve, reject) {
+        if ( ! _.isNumber( article_id )) reject( "Variable article_id is not a number" );
+        var article = $sccope.getArticle( article_id );
+        if (false === article ) reject("Article doesn't existe id:" + article_id);
+        var Form = new FormData();
+        Form.append('option', 'com_ajax');
+        Form.append('plugin', 'tarifs');
+        Form.append('method', 'updateTarifs');
+  
+        Form.append('id', parseInt(article_id));
+        Form.append('title', article.title);
+        Form.append('cost', parseInt(article.cost));
+        Form.append('description', article.description);
+  
+        Form.append('format', 'json');
+        $scope.toggleProgress();
+        dashboardFactory.formHttp( Form )
+          .then( function successCallback( results ) {
+            $scope.toggleProgress();
+            var rq = results.data;
+            if (rq.success){
+              resolve( rq.data );
+            }
+          })
+
+      });
+    };
+
+    $scope.editTarifDialog = function( ev, article_id ) {
+      dashboardServices.setEditArticle( article_id );
+      /** mdDialogShow here with dialogEditorCtrl controller */
+    };
+
     $scope.editDialog = function( ev, article_id ) {
       dashboardServices.setEditArticle( article_id );
       $mdDialog.show({
-        controller: dialogCtrl,
+        controller: dialogFieldsCtrl,
         scope: $scope,
         preserveScope: true,
         templateUrl: $scope.configs.assets + 'js/partials/dialog.edit.html',
@@ -50,7 +120,13 @@ routeDashboard
       });
     };
 
-    function dialogCtrl( $scope, $mdDialog, dashboardFactory, dashboardServices ) {
+    /**
+     * An angular controller
+     * @param {$scope}  
+     * @param {$mdDialog}  
+     * @param {*} dashboardServices 
+     */
+    function dialogFieldsCtrl( $scope, $mdDialog, dashboardServices ) {
       $scope.id = dashboardServices.getEditId();
       if (_.isNaN($scope.id)) { console.warn( 'Variable `editId` n\est pas definie' ); return;}
       $scope.fields = $scope.getFields( $scope.id );
@@ -60,8 +136,6 @@ routeDashboard
         if ($scope.inputField =="" || $scope.inputField == " ") return;
         $scope.fields.push( $scope.inputField );
         $scope.inputField = "";
-
-        /** update global article value */
       };
 
       $scope.cancel = function() {
@@ -71,19 +145,62 @@ routeDashboard
         $mdDialog.hide();
       };
 
+      /**
+       * Save current fields in db and $scope articles
+       */
       $scope.saveField = function() {
         $scope.articles = _.map( $scope.articles, function( _art ) {
           if (_art.id == $scope.id.toString())
             _art.fields = $scope.fields;
           return _art;
         });
+        $scope.updateFields( $scope.id )
+          .then(function onResolve( results ) {
+
+          }, function onReject( errno ) { console.error( errno ); } )
         $mdDialog.hide();
       };
 
+      /**
+       * @param {string} fieldTitle 
+       */
       $scope.deleteField = function( fieldTitle ) {
         $scope.fields = _.reject( $scope.fields, function(title) { return title == fieldTitle});
-        console.log( $scope.fields );
       }
+    }
+
+    function dialogEditorCtrl( $scope, $mdDialog, dashboardServices ) {
+      $scope._progress = false;
+      $scope._id = dashboardServices.getEditId();
+      $scope._editor = $scope.getArticle( $scope._id );
+      /** $scope.articles */
+      $scope.cancel = function() {
+        $mdDialog.cancel();
+      };
+      $scope.hide = function() {
+        $mdDialog.hide();
+      };
+
+      $scope._toggeProgress = function(){
+        $scope._progress = !$scope._progress;
+      }
+
+      $scope._saveEditor = function() {
+        $scope.articles = _.map( $scope.articles, function( article ) {
+          if (article.id != $scope._id.toString()) return article;
+          article = _.clone($scope._editor);
+          return article;
+        });
+        $scope._toggeProgress()
+        $scope._updateTarifs( $scope._id )
+          .then(function onResolve( results ) {
+            $scope._toggeProgress();
+            $mdDialog.hide();
+          }, function onReject( errno ) { 
+            $scope._toggeProgress();
+            console.error( errno ); 
+          });
+      };
     }
 
     /**
@@ -97,6 +214,11 @@ routeDashboard
       return result;
     };
 
+    /**
+     * This function return array of fields
+     * @param {int}  
+     * @return {array}
+     */
     $scope.getFields = function( $id ) {
       var article = $scope.getArticle( $id );
       var fields = article.fields;
@@ -197,6 +319,18 @@ routeDashboard
         var article_id = scope.$eval(attrs.ortEdit);
         element.bind('click', function(ev) {
           scope.editDialog( ev, article_id );
+        });
+      }
+    }
+  }])
+  .directive('ortUpdate', [function() {
+    return {
+      restrict: "AEC",
+      scope: true,
+      link: function(scope, element, attrs) {
+        var article_id = scope.$eval(attrs.ortUpdate);
+        element.bind('click', function(ev) {
+          scope.editTarifDialog( ev, article_id );
         });
       }
     }
