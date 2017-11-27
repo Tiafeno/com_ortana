@@ -13,3 +13,7 @@ md-dialog.md-transition-in, md-dialog.md-transition-out {
   -webkit-transition: all .4s cubic-bezier(.25,.8,.25,1);
   transition: all .4s cubic-bezier(.25,.8,.25,1);
 }
+
+md-list > md-list-item:nth-child(2n+1) {
+  background: #ffe4c466 !important;
+}

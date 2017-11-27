@@ -45,9 +45,8 @@
             </md-card-title-text>
           </md-card-title>
           <md-card-content>
-            <p>Prix: {{ article.cost | currency : "Ar " }}</p>
-            <p>{{ article.description }}</p>
-            <p>
+            <p class="md-subhead">{{ article.cost | currency : "Ar " }}</p>
+            <p class="md-caption">{{ article.description }}</p>
           </md-card-content>
           <md-card-actions layout="row" layout-align="end center">
             <md-menu>
@@ -63,6 +62,11 @@
                 <md-menu-item>
                   <md-button ort-edit="{{ article.id }}">
                     Ajouter des rubrics
+                  </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button ort-update="{{ article.id }}">
+                    Modifier
                   </md-button>
                 </md-menu-item>
               </md-menu-content>

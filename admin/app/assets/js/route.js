@@ -1,10 +1,11 @@
 'use strict'
 var routeDashboard = angular.module('routeDashboard', [ 'ngMaterial', 'ngRoute' ]);
 routeDashboard
-  .controller('cpanelCtrl', ["$scope", "dashboardFactory", "dashboardServices", "$mdDialog",
-                             function( $scope, dashboardFactory, dashboardServices, $mdDialog ) {
-
+  .controller('cpanelCtrl', ["$scope", "$location", "$window", "dashboardFactory", "dashboardServices", "$mdDialog",
+                             function( $scope, $location, $window, dashboardFactory, dashboardServices, $mdDialog ) {
+    var lostConTest = 0;
     $scope.tarif = {};
+    $scope.adminMail = null;
     $scope.progressbar = false;
     $scope.toggleProgress = function() {
       $scope.progressbar = $scope.progressbar ? false : true;
@@ -23,6 +24,16 @@ routeDashboard
             /** Return data array in array */
             $scope.articles = _.flatten(request.data);
         })
+      
+      dashboardFactory.get( {
+        option: "com_ajax",
+        plugin: "tarifs",
+        method: "getmail",
+        format: "json"
+      }). then(function successCallback( results ) {
+        var rq = results.data;
+        $scope.adminMail = rq.data[0];
+      })
     };
     $scope.Initialize();
 
@@ -57,6 +68,11 @@ routeDashboard
             if (rq.success){
               resolve( rq.data );
             }
+          }, function errorCallback( errno ) {
+            $window.setTimeout(function() {
+              $scope.updateFields( article_id );
+            }, 2500);
+            
           })
       });
     };
@@ -69,7 +85,7 @@ routeDashboard
     $scope.updateTarifs = function( article_id ) {
       return new Promise(function(resolve, reject) {
         if ( ! _.isNumber( article_id )) reject( "Variable article_id is not a number" );
-        var article = $sccope.getArticle( article_id );
+        var article = $scope.getArticle( article_id );
         if (false === article ) reject("Article doesn't existe id:" + article_id);
         var Form = new FormData();
         Form.append('option', 'com_ajax');
@@ -86,10 +102,11 @@ routeDashboard
         dashboardFactory.formHttp( Form )
           .then( function successCallback( results ) {
             $scope.toggleProgress();
-            var rq = results.data;
-            if (rq.success){
-              resolve( rq.data );
-            }
+            resolve( results );
+          }, function errorCallback( error ) {
+            $window.setTimeout(function() {
+              $scope.updateTarifs( article_id );
+            }, 3000);
           })
 
       });
@@ -98,6 +115,22 @@ routeDashboard
     $scope.editTarifDialog = function( ev, article_id ) {
       dashboardServices.setEditArticle( article_id );
       /** mdDialogShow here with dialogEditorCtrl controller */
+      $mdDialog.show({
+        controller: dialogEditorCtrl,
+        scope: $scope,
+        preserveScope: true,
+        templateUrl: $scope.configs.assets + 'js/partials/dialog.tarif.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: false,
+        escapeToClose: true
+      })
+      .then(function( answer ) {
+        /** save change */
+        
+      }, function() {
+        
+      });
     };
 
     $scope.editDialog = function( ev, article_id ) {
@@ -132,7 +165,7 @@ routeDashboard
       $scope.fields = $scope.getFields( $scope.id );
       $scope.inputField = "";
 
-      $scope.submitField = function() {
+      $scope._submitField = function() {
         if ($scope.inputField =="" || $scope.inputField == " ") return;
         $scope.fields.push( $scope.inputField );
         $scope.inputField = "";
@@ -148,7 +181,7 @@ routeDashboard
       /**
        * Save current fields in db and $scope articles
        */
-      $scope.saveField = function() {
+      $scope._saveField = function() {
         $scope.articles = _.map( $scope.articles, function( _art ) {
           if (_art.id == $scope.id.toString())
             _art.fields = $scope.fields;
@@ -163,8 +196,9 @@ routeDashboard
 
       /**
        * @param {string} fieldTitle 
+       * @return {void}
        */
-      $scope.deleteField = function( fieldTitle ) {
+      $scope._deleteField = function( fieldTitle ) {
         $scope.fields = _.reject( $scope.fields, function(title) { return title == fieldTitle});
       }
     }
@@ -192,10 +226,19 @@ routeDashboard
           return article;
         });
         $scope._toggeProgress()
-        $scope._updateTarifs( $scope._id )
+        $scope.updateTarifs( $scope._id )
           .then(function onResolve( results ) {
-            $scope._toggeProgress();
-            $mdDialog.hide();
+
+            $scope.$apply(function() {
+              // if (results.status == 403 || results.status == 401){
+              //   var reloadConfirm = $window.confirm( "Une erreur s'est produits ou vous etes déconnecter." +
+              //   " Voulez-vous rafraichir la page?" );
+              //   if (reloadConfirm) { location.reload(true); return; }
+              // }
+              $scope._toggeProgress();
+              $mdDialog.hide();
+            });
+
           }, function onReject( errno ) { 
             $scope._toggeProgress();
             console.error( errno ); 
@@ -216,7 +259,7 @@ routeDashboard
 
     /**
      * This function return array of fields
-     * @param {int}  
+     * @param {int} $id
      * @return {array}
      */
     $scope.getFields = function( $id ) {
@@ -230,6 +273,7 @@ routeDashboard
     /**
      * This function is call after save tarif
      * @param {object} submitTarif 
+     * @return {void}
      */
     $scope.refresh = function( submitTarif ) {
       var articles = new Array( $scope.articles );
@@ -240,6 +284,7 @@ routeDashboard
     /**
      * Save tarif in database
      * @param {bool} isValid 
+     * @return {void}
      */
     $scope.saveTarifs = function( isValid ) {
       if ( ! isValid ) return false;
@@ -271,7 +316,7 @@ routeDashboard
   
   }])
   /**
-   * Delete article
+   * Delete current article when this element is clicked 
    */
   .directive('ortDelete', ['dashboardFactory', '$mdDialog', function( dashboardFactory, $mdDialog ) {
     return {
@@ -313,7 +358,7 @@ routeDashboard
   }])
   .directive('ortEdit', [function() {
     return {
-      restrict: "AEC",
+      restrict: "A",
       scope: true,
       link: function(scope, element, attrs) {
         var article_id = scope.$eval(attrs.ortEdit);
@@ -325,7 +370,7 @@ routeDashboard
   }])
   .directive('ortUpdate', [function() {
     return {
-      restrict: "AEC",
+      restrict: "A",
       scope: true,
       link: function(scope, element, attrs) {
         var article_id = scope.$eval(attrs.ortUpdate);

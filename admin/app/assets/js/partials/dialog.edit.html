@@ -17,7 +17,7 @@
               <md-list ng-cloak>
                 <md-list-item ng-repeat="field in fields" class="noright">
                   <p>{{ field }}</p>
-                  <md-icon class="md-secondary" ><i ng-click="deleteField( field )" class="material-icons" style="cursor: pointer">delete</i></md-icon>
+                  <md-icon class="md-secondary" ><i ng-click="_deleteField( field )" class="material-icons" style="cursor: pointer">delete</i></md-icon>
                 </md-list-item>
               </md-list>
             </md-content>
@@ -25,12 +25,12 @@
           <div flex="40">
             <md-content class="md-padding" layout-xs="column" layout="column">
               <md-input-container class="md-block" flex-gt-sm>
-                <label>Field</label>
+                <label>Rubric</label>
                 <input md-maxlength="50" required name="name" ng-model="inputField" />
-                <div class="hint" >Tell us what we should call you!</div>
+                <div class="hint" ></div>
               </md-input-container>
       
-              <div><md-button ng-click="submitField( fieldForm.$valid )" class="md-raised md-primary">Ajouter</md-button></div>
+              <div><md-button ng-click="_submitField( fieldForm.$valid )" class="md-raised md-primary">Ajouter</md-button></div>
             </md-content>
           </div>
         </div>
@@ -41,7 +41,7 @@
           <md-button ng-click="hide()">
             Annuler
           </md-button>
-          <md-button ng-click="saveField()">
+          <md-button ng-click="_saveField()">
             Enregistrer
           </md-button>
         </md-dialog-actions>

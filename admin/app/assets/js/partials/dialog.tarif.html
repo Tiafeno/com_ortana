@@ -1,0 +1,57 @@
+<md-dialog class="md-transition-in" aria-label="Mango (Fruit)">
+  <form name="editor" ng-cloak novalidate>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Modification</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="hide()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div layout="row">
+        <div flex>
+          <md-content class="md-padding" layout-xs="column" layout="column">
+            
+              <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Titre</label>
+                  <input ng-cust name="title" ng-model="_editor.title" required>
+                  <div ng-messages="editor.title.$error" role="alertdialog">
+                      <div ng-message="required">Veuillez ajouter une titre pour cette article.</div>
+                    </div>
+                </md-input-container>
+      
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Prix</label>
+                  <input ng-cust name="cost" ng-model="_editor.cost" ng-pattern="/^[0-9]*$/" required>
+                  <div ng-messages="editor.cost.$error" role="alertdialog">
+                    <div ng-message="required">Veuillez ajouter un prix pour cette article.</div>
+                    <div ng-message="pattern">Seulement les chiffres sont autoriser.</div>
+                  </div>
+                </md-input-container>
+              </div>
+      
+              <md-input-container class="md-block">
+                <label>Description</label>
+                <textarea name="description" ng-model="_editor.description" md-maxlength="500" rows="5" md-select-on-focus></textarea>
+              </md-input-container>
+
+          </md-content>
+        </div>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button ng-click="hide()">
+          Annuler
+        </md-button>
+        <md-button ng-click="_saveEditor()">
+          Enregistrer
+        </md-button>
+      </md-dialog-actions>
+  </form>
+</md-dialog>
