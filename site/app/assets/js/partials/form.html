@@ -1,0 +1,105 @@
+<style type="text/css">
+.ng-scope input[type="email"] {
+  display: block !important;
+  height: 30px !important;
+  padding-top: 2px !important;
+  padding-bottom: 1px !important;
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+  margin-bottom: 0  !important;
+  border-left: none  !important;
+  border-top: none  !important;
+  border-right: none  !important;
+}
+.ng-scope input:focus:invalid:focus, 
+.ng-scope textarea:focus:invalid:focus, 
+.ng-scope select:focus:invalid:focus {
+  box-shadow: none !important;
+}
+</style>
+<div layout="row">
+  <div flex="70">
+    <md-content layout-padding>
+      <form name="inscriptionForm" ng-submit="sendEmail( inscriptionForm.$valid )" novalidate>
+        <p class="md-display-1">Commande</p>
+        <div layout="row">
+          <md-input-container flex="50">
+            <label>Nom</label>
+            <input required name="firstname" ng-model="ortanaform.firstname">
+            <div ng-messages="inscriptionForm.firstname.$error">
+              <div ng-message="required">Veuillez renseigner ce champ.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container flex="50">
+            <label>Prenom</label>
+            <input required name="lastname" ng-model="ortanaform.lastname">
+            <div ng-messages="inscriptionForm.lastname.$error">
+              <div ng-message="required">Veuillez renseigner ce champ.</div>
+            </div>
+          </md-input-container>
+        </div>
+
+        <md-input-container flex="50" class="md-block">
+          <label>NIF/STAT</label>
+          <input required name="society" ng-model="ortanaform.society">
+          <div ng-messages="inscriptionForm.society.$error">
+            <div ng-message="required">Veuillez renseigner ce champ.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container flex="50" class="md-block">
+          <label>Adresse</label>
+          <input required name="adress" ng-model="ortanaform.adress">
+          <div ng-messages="inscriptionForm.adress.$error">
+            <div ng-message="required">Veuillez renseigner ce champ.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Votre adresse Email</label>
+          <input required type="email" name="clientEmail" ng-model="ortanaform.clientEmail"
+                minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+
+          <div ng-messages="inscriptionForm.clientEmail.$error" role="alert">
+            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+              Votre adresse e-mail doit comporter entre 10 et 100 caractères et ressembler à une adresse e-mail.
+            </div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+            <label>Description</label>
+            <input md-maxlength="250" md-no-asterisk name="description" ng-model="ortanaform.description">
+            <div ng-messages="inscriptionForm.description.$error">
+              <div ng-message="md-maxlength">La description doit comporter moins de 250 caractères.</div>
+            </div>
+          </md-input-container>
+
+        <md-input-container class="md-block">
+          <md-checkbox name="tos" ng-model="ortanaform.tos" required>
+              J'accepte les conditions d'utilisation d'ORTANA.
+          </md-checkbox>
+          <div ng-messages="inscriptionForm.tos.$error" multiple md-auto-hide="false">
+            <div ng-message="required">
+              Vous devez accepter les conditions d'utilisation avant de pouvoir continuer.
+            </div>
+          </div>
+        </md-input-container>
+
+        <div>
+          <md-button type="submit" class="md-raised md-primary" ng-disabled="inscriptionForm.$invalid">Envoyer ma commande</md-button>
+        </div>
+
+      </form>
+    </md-content>
+  </div>
+  <div flex="30">
+    <md-card style="box-shadow: none">
+        <md-card-content>
+          <span class="md-body-2 roboto-slab">{{ article.title }}</span>
+          <p style="font-size:.9em;">{{ article.description }}</p>
+        </md-card-content>
+      </md-card>
+  </div>
+</div>

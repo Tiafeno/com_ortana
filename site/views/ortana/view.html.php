@@ -6,7 +6,10 @@ class OrtanaViewOrtana extends JViewLegacy
   function display($tpl = null)
   {
     $this->articles = comOrtanaHelper::getArticles();
-    comDocument::frontHead( $document );
+    JHtml::_('bootstrap.framework');
+    /* Include native jquery libaries */
+    JHtml::_('jquery.framework');
+    comDocument::frontHead();
     parent::display( $tpl );
   }
 }

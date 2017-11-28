@@ -1,21 +1,17 @@
 <?php
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-/* Include native jquery libaries */
-JHtml::_('jquery.framework');
 
 $url = JUri::getInstance(); 
 $document = JFactory::getDocument();
 $document->addScriptOptions('com_ortana', [
-  'assets' => JPATH_COMPONENT . '/app/assets/',
-  'articles' => json_encode($this->articles),
-  'ajax_url' => $url->toString()
+  'assets' => JUri::base() . 'components/com_ortana/app/assets/',
+  'articles' => json_encode($this->articles)
 ]);
 ?>
-<div class="item-page" itemscope="" itemtype="https://schema.org/Article">
-  <div itemprop="articleBody">
-    <div ng-app="ortanaApp" ng-controller="ortanaCtrl">
-      <div ng-view></div>
-    </div>
+
+<div ng-app="ortanaApp" ng-controller="ortanaCtrl">
+  <div layout="row" layout-xs="column">
+    <div style="width: 100%" ng-view></div>
   </div>
 </div>

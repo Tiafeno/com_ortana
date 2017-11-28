@@ -1,0 +1,7 @@
+.ng-scope p:not(.md-headline), .ng-scope span:not(.md-headline), .ng-scope a,
+input, button, select, textarea, .ng-scope div {
+  font-family: Roboto,Helvetica Neue,sans-serif !important;
+}
+.md-headline, .roboto-slab {
+  font-family: 'Roboto Slab', serif !important;
+}

@@ -1,24 +1,87 @@
+<style type="text/css">
+i.material-icons {
+  position: relative;
+  top: 7px;
+  color: darkorange;
+}
+
+.month {
+  display: flex;
+  width: 100%;
+}
+.monthBlock {
+  display: block;
+  float: left;
+  margin: auto;
+}
+.shared {
+  display: inline-block; 
+  position: relative; 
+  width: 100%; 
+  background: #2a59b3
+}
+
+.shared > h4 {
+  font-size: 22px;
+  text-align: center; 
+  color: white;
+}
+
+.best > h6 {
+  font-size: 14px;
+  letter-spacing: 0.036em;
+  line-height: 17px;
+  text-align: justify;
+  font-family: Roboto,Helvetica Neue,sans-serif !important;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.best ul > li {
+  list-style: none;
+  width: 80%;
+  margin: auto;
+}
+
+md-content aside {
+  display: block;
+  width: 390px;
+  margin-right: 20px;
+  float: left;
+  margin-top: 40px;
+}
+
+</style>
+
+
 <md-content class="md-padding" layout-xs="column" layout="row">
-  <div flex-xs flex-gt-xs="50" layout="column">
-
-    <md-card ng-repeat="article in Articles track by article.id">
-      <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">{{ article.title }}</span>
-          <span class="md-subhead">{{ article.cost }} AR/mois</span>
-        </md-card-title-text>
-      </md-card-title>
-      <md-card-content>
-        <p>
-          The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-          two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-        </p>
-      </md-card-content>
-      <md-card-actions layout="row" layout-align="end center">
-        <md-button choose-article="{{ article.id }}">Choose</md-button>
-      </md-card-actions>
-    </md-card>
-
+  <div style="display: inline-block; width: 100%">
+    <aside class="serverBlock" ng-repeat="article in articles track by article.id">
+      <div class="month">
+        <div class="monthBlock">
+          <h2 style="font-size: 315%;">{{ article.cost | currency }}</h2>
+          <h3 style="text-align: right"><small>HT/mois</small></h3>
+        </div>
+      </div>
+      <div class="shared">
+          <h4>{{ article.title }}</h4>
+      </div>
+      <div class="best">
+        <h6>{{ article.description }}</h6>
+        <ul>
+          <li ng-repeat="field in article.fields">
+            <span class="flaticon-checked8">
+              <i class="material-icons">done</i>
+            </span>
+            {{ field }}
+          </li>
+        </ul>
+      <div style="margin-top: 30px">
+          <md-button class="md-raised md-warn" style="margin: auto; display: block" choose-article="{{ article.id }}">
+            Commander
+          </md-button>
+      </div>
+    </div>
+    </aside>
   </div>
 </md-content>
