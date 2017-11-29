@@ -13,7 +13,7 @@ routeDashboard
     $scope.Initialize = function() {
       var Form = new FormData();
       Form.append('option', 'com_ajax');
-      Form.append('plugin', 'tarifs');
+      Form.append('plugin', 'plg_tarifs');
       Form.append('method', 'selectAll');
       Form.append('format', 'json');
 
@@ -27,7 +27,7 @@ routeDashboard
       
       dashboardFactory.get( {
         option: "com_ajax",
-        plugin: "tarifs",
+        plugin: "plg_tarifs",
         method: "getmail",
         format: "json"
       }). then(function successCallback( results ) {
@@ -53,7 +53,7 @@ routeDashboard
         var fieldsJoin = fields.join("|");
         var Form = new FormData();
         Form.append('option', 'com_ajax');
-        Form.append('plugin', 'tarifs');
+        Form.append('plugin', 'plg_tarifs');
         Form.append('method', 'updateFields');
   
         Form.append('id', parseInt(article_id));
@@ -89,7 +89,7 @@ routeDashboard
         if (false === article ) reject("Article doesn't existe id:" + article_id);
         var Form = new FormData();
         Form.append('option', 'com_ajax');
-        Form.append('plugin', 'tarifs');
+        Form.append('plugin', 'plg_tarifs');
         Form.append('method', 'updateTarifs');
   
         Form.append('id', parseInt(article_id));
@@ -290,7 +290,7 @@ routeDashboard
       if ( ! isValid ) return false;
       var Form = new FormData();
       Form.append('option', 'com_ajax');
-      Form.append('plugin', 'tarifs');
+      Form.append('plugin', 'plg_tarifs');
       Form.append('method', 'insert');
       Form.append('format', 'json');
 
@@ -328,7 +328,7 @@ routeDashboard
         element.bind('click', function(e) {
           var params = {
             option: 'com_ajax',
-            plugin: 'tarifs',
+            plugin: 'plg_tarifs',
             method: 'delete',
             format: 'json',
             id: parseInt( article_id )
