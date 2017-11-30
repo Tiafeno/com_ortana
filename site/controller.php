@@ -23,6 +23,12 @@ class OrtanaController extends JControllerLegacy
     $db->setQuery($query);
     return $db->loadObject();
   }
+
+  protected function getMail() {
+    $app	= JFactory::getApplication();
+    $params = $app->getParams();
+    return empty($params['email']) ? 'contact@ortana.mg' : $params[ 'email' ];
+  }
   
   public function sendMail() {
     $engine = new Engine();
@@ -50,6 +56,7 @@ class OrtanaController extends JControllerLegacy
     $engine->assign('article', $article);
 
     $sender = [$mail, $firstname . ' ' . $lastname];
+    $mail = $this->getMail();
     $template = $engine->fetch( "mail.tpl" );
 
     $mailer = JFactory::getMailer();

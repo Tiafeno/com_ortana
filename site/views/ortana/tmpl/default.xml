@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_ORTANA_ORTANA_VIEW_DEFAULT_TITLE">
-		<message>COM_ORTANA_ORTANA_VIEW_DEFAULT_DESC</message>
+	<layout title="Référencement ">
+		<message>Référencement payant et une formulaire de commande pour les clients (Hôtel, restaurant, pub-bar- lounge)</message>
 	</layout>
-	<fields name="request">
-		<fieldset name="request">
-			<field
-					name="id"
-					type="list"
-					label="COM_ORTANA_ORTANA_FIELD_GREETING_LABEL"
-					description="COM_ORTANA_ORTANA_FIELD_GREETING_DESC"
-					default="1">
-							<option value="1">Hello World!</option>
-							<option value="2">Good bye World!</option>
-			</field>
+	<fields name="params">
+		<fieldset name="basic">
+			<field name="email" type="email"
+				label="Votre adresse e-mail"
+				description="Adresse e-mail pour envoyer la commande"
+				required="true"
+				size="100"
+				class="inputbox"
+				validate="email" />
 		</fieldset>
 	</fields>
 </metadata>

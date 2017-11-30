@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS `#__ortana_articles` (
 	`id` BIGINT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 	`title` TEXT NOT NULL,
 	`cost` INT NOT NULL,
-	`description` LONGTEXT NULL
+	`description` LONGTEXT NULL,
+	`fields` LONGTEXT NULL
 ) 
   ENGINE =MyISAM
 	AUTO_INCREMENT =0

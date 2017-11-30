@@ -1,8 +1,7 @@
 'use strict'
 var routeDashboard = angular.module('routeDashboard', [ 'ngMaterial', 'ngRoute' ]);
 routeDashboard
-  .controller('cpanelCtrl', ["$scope", "$location", "$window", "dashboardFactory", "dashboardServices", "$mdDialog",
-                             function( $scope, $location, $window, dashboardFactory, dashboardServices, $mdDialog ) {
+  .controller('cpanelCtrl', ["$scope", "$location", "$window", "dashboardFactory", "dashboardServices", "$mdDialog", function( $scope, $location, $window, dashboardFactory, dashboardServices, $mdDialog ) {
     var lostConTest = 0;
     $scope.tarif = {};
     $scope.adminMail = null;
@@ -16,15 +15,17 @@ routeDashboard
       Form.append('plugin', 'plg_tarifs');
       Form.append('method', 'selectAll');
       Form.append('format', 'json');
-
+      /**
+       * Select all article content
+       */
       dashboardFactory.formHttp( Form )
         .then( function successCallback( results ) {
-          var request = results.data;
-          if (request.success)
-            /** Return data array in array */
-            $scope.articles = _.flatten(request.data);
-        })
-      
+        var request = results.data;
+        if (request.success)
+          /** Return data array in array */
+          $scope.articles = _.flatten(request.data);
+      });
+
       dashboardFactory.get( {
         option: "com_ajax",
         plugin: "plg_tarifs",
@@ -32,8 +33,9 @@ routeDashboard
         format: "json"
       }). then(function successCallback( results ) {
         var rq = results.data;
-        $scope.adminMail = rq.data[0];
-      })
+        if (rq.success)
+          $scope.adminMail = rq.data[0];
+      });
     };
     $scope.Initialize();
 
@@ -55,25 +57,25 @@ routeDashboard
         Form.append('option', 'com_ajax');
         Form.append('plugin', 'plg_tarifs');
         Form.append('method', 'updateFields');
-  
+
         Form.append('id', parseInt(article_id));
         Form.append('fields', fieldsJoin);
-  
+
         Form.append('format', 'json');
         $scope.toggleProgress();
         dashboardFactory.formHttp( Form )
           .then( function successCallback( results ) {
-            $scope.toggleProgress();
-            var rq = results.data;
-            if (rq.success){
-              resolve( rq.data );
-            }
-          }, function errorCallback( errno ) {
-            $window.setTimeout(function() {
-              $scope.updateFields( article_id );
-            }, 2500);
-            
-          })
+          $scope.toggleProgress();
+          var rq = results.data;
+          if (rq.success){
+            resolve( rq.data );
+          } else reject( rq.message );
+        }, function errorCallback( errno ) {
+          $window.setTimeout(function() {
+            $scope.updateFields( article_id );
+          }, 2500);
+
+        })
       });
     };
 
@@ -91,27 +93,31 @@ routeDashboard
         Form.append('option', 'com_ajax');
         Form.append('plugin', 'plg_tarifs');
         Form.append('method', 'updateTarifs');
-  
+
         Form.append('id', parseInt(article_id));
         Form.append('title', article.title);
         Form.append('cost', parseInt(article.cost));
         Form.append('description', article.description);
-  
+
         Form.append('format', 'json');
         $scope.toggleProgress();
         dashboardFactory.formHttp( Form )
           .then( function successCallback( results ) {
-            $scope.toggleProgress();
-            resolve( results );
-          }, function errorCallback( error ) {
-            $window.setTimeout(function() {
-              $scope.updateTarifs( article_id );
-            }, 3000);
-          })
+          $scope.toggleProgress();
+          resolve( results );
+        }, function errorCallback( error ) {
+          $window.setTimeout(function() {
+            $scope.updateTarifs( article_id );
+          }, 3000);
+        })
 
       });
     };
 
+    /**
+     * @param {$event} ev 
+     * @param {int} article_id 
+     */
     $scope.editTarifDialog = function( ev, article_id ) {
       dashboardServices.setEditArticle( article_id );
       /** mdDialogShow here with dialogEditorCtrl controller */
@@ -125,14 +131,17 @@ routeDashboard
         clickOutsideToClose: false,
         escapeToClose: true
       })
-      .then(function( answer ) {
+        .then(function( answer ) {
         /** save change */
-        
       }, function() {
-        
+
       });
     };
 
+    /**
+     * @param {$event} ev 
+     * @param {int} article_id 
+     */
     $scope.editDialog = function( ev, article_id ) {
       dashboardServices.setEditArticle( article_id );
       $mdDialog.show({
@@ -145,7 +154,7 @@ routeDashboard
         clickOutsideToClose: false,
         escapeToClose: true
       })
-      .then(function(answer) {
+        .then(function(answer) {
         /** save change */
         dashboardServices.resetEdit();
       }, function() {
@@ -154,10 +163,10 @@ routeDashboard
     };
 
     /**
-     * An angular controller
+     * An angular controller `dialogFieldsCtrl`
      * @param {$scope}  
      * @param {$mdDialog}  
-     * @param {*} dashboardServices 
+     * @param {service} dashboardServices 
      */
     function dialogFieldsCtrl( $scope, $mdDialog, dashboardServices ) {
       $scope.id = dashboardServices.getEditId();
@@ -190,7 +199,7 @@ routeDashboard
         $scope.updateFields( $scope.id )
           .then(function onResolve( results ) {
 
-          }, function onReject( errno ) { console.error( errno ); } )
+        }, function onReject( errno ) { console.error( errno ); } )
         $mdDialog.hide();
       };
 
@@ -203,6 +212,12 @@ routeDashboard
       }
     }
 
+    /**
+     * An angular controller `dialogEditorCtrl`
+     * @param {$scope}  
+     * @param {$mdDialog}  
+     * @param {*} dashboardServices 
+     */
     function dialogEditorCtrl( $scope, $mdDialog, dashboardServices ) {
       $scope._progress = false;
       $scope._id = dashboardServices.getEditId();
@@ -214,11 +229,9 @@ routeDashboard
       $scope.hide = function() {
         $mdDialog.hide();
       };
-
       $scope._toggeProgress = function(){
         $scope._progress = !$scope._progress;
       }
-
       $scope._saveEditor = function() {
         $scope.articles = _.map( $scope.articles, function( article ) {
           if (article.id != $scope._id.toString()) return article;
@@ -229,25 +242,20 @@ routeDashboard
         $scope.updateTarifs( $scope._id )
           .then(function onResolve( results ) {
 
-            $scope.$apply(function() {
-              // if (results.status == 403 || results.status == 401){
-              //   var reloadConfirm = $window.confirm( "Une erreur s'est produits ou vous etes déconnecter." +
-              //   " Voulez-vous rafraichir la page?" );
-              //   if (reloadConfirm) { location.reload(true); return; }
-              // }
-              $scope._toggeProgress();
-              $mdDialog.hide();
-            });
-
-          }, function onReject( errno ) { 
+          $scope.$apply(function() {
             $scope._toggeProgress();
-            console.error( errno ); 
+            $mdDialog.hide();
           });
+
+        }, function onReject( errno ) { 
+          $scope._toggeProgress();
+          console.error( errno ); 
+        });
       };
     }
 
     /**
-     * Get article by id
+     * This function return an article
      * @param {int} $id 
      * @return {object} result 
      */
@@ -256,7 +264,6 @@ routeDashboard
       if (result == undefined) return false;
       return result;
     };
-
     /**
      * This function return array of fields
      * @param {int} $id
@@ -269,7 +276,6 @@ routeDashboard
       var fieldArray = _.isArray(fields) ? fields : fields.split('|');
       return fieldArray;
     }
-
     /**
      * This function is call after save tarif
      * @param {object} submitTarif 
@@ -300,20 +306,20 @@ routeDashboard
       $scope.toggleProgress();
       dashboardFactory.formHttp( Form )
         .then( function successCallback( results ) {
-          $scope.toggleProgress();
-          var request = results.data;
-          if (request.success) {
-            var submitTarif = _.union( $scope.tarif );
-            $scope.tarif = {};
-            $scope.tarifForm.$setUntouched();
-            $scope.tarifForm.$setPristine();
+        $scope.toggleProgress();
+        var request = results.data;
+        if (request.success) {
+          var submitTarif = _.union( $scope.tarif );
+          $scope.tarif = {};
+          $scope.tarifForm.$setUntouched();
+          $scope.tarifForm.$setPristine();
 
-            /** Code here, after submit and insert article */
-            $scope.refresh( submitTarif );
-          }
-        })
+          /** Code here, after submit and insert article */
+          $scope.refresh( submitTarif );
+        }
+      })
     };
-  
+
   }])
   /**
    * Delete current article when this element is clicked 
@@ -334,21 +340,21 @@ routeDashboard
             id: parseInt( article_id )
           };
           var confirm = $mdDialog.confirm()
-            .title( article.title )
-            .textContent( 'Voulez vous vraiment supprimer cette article?.' )
-            .ariaLabel('Lucky day')
-            .ok( 'Supprimer' )
-            .cancel( 'Annuler' );
+          .title( article.title )
+          .textContent( 'Voulez vous vraiment supprimer cette article?.' )
+          .ariaLabel('Lucky day')
+          .ok( 'Supprimer' )
+          .cancel( 'Annuler' );
 
           $mdDialog.show(confirm).then(function() {
             scope.toggleProgress();
             dashboardFactory.get( params )
               .then(function successCallback( results ) {
-                scope.toggleProgress();
-                var data = results.data;
-                if (data.success)
-                  scope.Initialize();
-              });
+              scope.toggleProgress();
+              var data = results.data;
+              if (data.success)
+                scope.Initialize();
+            });
           }, function() {
 
           });

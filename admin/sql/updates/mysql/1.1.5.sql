@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS `#__ortana_articles` (
 	`title` TEXT NOT NULL,
 	`cost` INT NOT NULL,
 	`description` LONGTEXT NULL,
+	`fields` LONGTEXT NULL
 
 ) 
   ENGINE =MyISAM

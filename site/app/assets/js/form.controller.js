@@ -2,17 +2,18 @@
 
 ortanaForm
   .controller('ortanaCtrl', ['$scope', 'OServices', function( $scope, OServices ) {
-      'use strict'
-      $scope.articles = [];
-      $scope.configs = Joomla.getOptions('com_ortana');
-      /** set Articles */
-      var articles = [];
-      articles = _.union( JSON.parse($scope.configs.articles) );
-      $scope.articles = _.map( articles, function(article) {
+    'use strict'
+    $scope.articles = [];
+    $scope.configs = Joomla.getOptions('com_ortana');
+    /** set Articles */
+    var articles = [];
+    articles = _.union( JSON.parse($scope.configs.articles) );
+    $scope.articles = _.map( articles, function(article) {
+      if ( ! _.isNull(article.fields))
         article.fields = article.fields.split("|");
-        return article;
-      });
-      OServices.setArticlesFn( $scope.articles );
+      return article;
+    });
+    OServices.setArticlesFn( $scope.articles );
   }])
   .factory('OFactory', ['$http', function( $http ) {
     return {
@@ -71,15 +72,15 @@ ortanaForm
     var configs = Joomla.getOptions('com_ortana');
     $routeProvider
       .when('/inscription', {
-        templateUrl: configs.assets + 'js/partials/inscription.html',
-        controller: 'InscriptionCtrl'
-      })
+      templateUrl: configs.assets + 'js/partials/inscription.html',
+      controller: 'InscriptionCtrl'
+    })
       .when('/inscription/formulaire', {
-        templateUrl: configs.assets + 'js/partials/form.html',
-        controller: 'FormCtrl'
-      })
+      templateUrl: configs.assets + 'js/partials/form.html',
+      controller: 'FormCtrl'
+    })
       .otherwise({
-        redirectTo: '/inscription'
-      });
-    
+      redirectTo: '/inscription'
+    });
+
   }]);

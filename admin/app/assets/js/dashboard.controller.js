@@ -25,6 +25,9 @@ dashboard
           data: form
         });
       },
+      /**
+      * @param {object}
+      */
       get: function( query ) {
         return $http.get( "index.php", {
           params: query
@@ -46,7 +49,6 @@ dashboard
     self.setEditArticle = function( id ) { editId = parseInt(id); };
     self.getEditId = function() { return editId; }
     self.resetEdit = function() { return editId = NaN; }
-
     self.getConfig = function() { return config; }
   }])
   /**

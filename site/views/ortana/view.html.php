@@ -6,7 +6,8 @@ class OrtanaViewOrtana extends JViewLegacy
   function display($tpl = null)
   {
     $this->articles = comOrtanaHelper::getArticles();
-    JHtml::_('bootstrap.framework');
+    /* Mootools JavaScript Framework */
+    JHtml::_('behavior.framework');
     /* Include native jquery libaries */
     JHtml::_('jquery.framework');
     comDocument::frontHead();
