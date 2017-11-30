@@ -4,10 +4,12 @@ var formRoute = angular.module('formRoute', [ "ngMaterial", "ngRoute" ]);
 formRoute.controller('InscriptionCtrl', ['$scope', function( $scope ) {
 }]);
   /** Controller du formulaire de contact */
-formRoute.controller('FormCtrl', ['$scope', '$location', 'OServices', 'OFactory', 
-                                  function( $scope, $location, OServices, OFactory ) {
+formRoute.controller('FormCtrl', ['$scope', '$location', 'OServices', 'OFactory', '$mdDialog',
+                                  function( $scope, $location, OServices, OFactory, $mdDialog ) {
     $scope.article = {};
     $scope.ortanaform = {};
+    $scope.stat = null;
+    $scope.loading = false;
     /**
      * Récuperer l'article selectionner et les stockers
      * @param {void}
@@ -20,12 +22,17 @@ formRoute.controller('FormCtrl', ['$scope', '$location', 'OServices', 'OFactory'
       }, function errorCallback( errno ) {
         $location.path('/inscription');
       });
+    
+    $scope.toggleLoading = function() {
+      $scope.loading = !$scope.loading;
+    }
     /**
      * Envoie le contenue du formulaire à l'administration d'ortana
      * @param {bool} isValid
      * @return {bool}
      */
     $scope.sendEmail = function( isValid ) {
+      if ($scope.loading) return;
       var Form = new FormData();
       Form.append('option', 'com_ortana');
       Form.append('task', 'sendMail');
@@ -36,12 +43,32 @@ formRoute.controller('FormCtrl', ['$scope', '$location', 'OServices', 'OFactory'
       Form.append('society', $scope.ortanaform.society);
       Form.append('adress', $scope.ortanaform.adress);
       Form.append('email', $scope.ortanaform.clientEmail);
-      Form.append('description', $scope.ortanaform.description);
+      Form.append('phone', $scope.ortanaform.phone);
+      Form.append('description', ($scope.ortanaform.description == undefined) ? '' : $scope.ortanaform.description);
       Form.append('article_id', $scope.article.id);
+
+      $scope.toggleLoading();
       OFactory.formHttp( Form )
         .then(function successCallback( results ) {
+          $scope.toggleLoading();
           var rq = results.data;
-          console.log(rq);
+          if (rq) {
+            $scope.ortanaform = {};
+            $scope.inscriptionForm.$setPristine();
+            $scope.inscriptionForm.$setUntouched();
+            $scope.stat = "Votre commande a bien été expédiée. Un(e) responsable vous contactera. Merci";
+            $mdDialog.show(
+              $mdDialog.alert()
+                .clickOutsideToClose(true)
+                .title('Information')
+                .textContent($scope.stat)
+                .ariaLabel('Alert Dialog Demo')
+                .ok('Accepter')
+            )
+            .then(function() {
+              $location.path('/inscription');
+            })
+          } 
         })
     };
 }]);

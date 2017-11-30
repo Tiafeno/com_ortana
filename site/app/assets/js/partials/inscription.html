@@ -8,11 +8,13 @@ i.material-icons {
 .month {
   display: flex;
   width: 100%;
+  background: #edefed;
 }
 .monthBlock {
   display: block;
-  float: left;
-  margin: auto;
+  margin-right: 0;
+  margin-left: auto;
+  padding-right: 20px;
 }
 .shared {
   display: inline-block; 
@@ -35,6 +37,7 @@ i.material-icons {
   font-family: Roboto,Helvetica Neue,sans-serif !important;
   padding-left: 5px;
   padding-right: 5px;
+  font-weight: normal;
 }
 
 .best ul > li {
@@ -55,16 +58,16 @@ md-content aside {
 
 
 <md-content class="md-padding" layout-xs="column" layout="row">
-  <div style="display: inline-block; width: 100%">
+  <div style="display: inline-block; width: inherit; margin: auto;">
     <aside class="serverBlock" ng-repeat="article in articles track by article.id">
-      <div class="month">
-        <div class="monthBlock">
-          <h2 style="font-size: 315%;">{{ article.cost | currency }}</h2>
-          <h3 style="text-align: right"><small>HT/mois</small></h3>
-        </div>
-      </div>
       <div class="shared">
           <h4>{{ article.title }}</h4>
+      </div>
+      <div class="month">
+        <div class="monthBlock">
+            <h3 style="text-align: right; margin-bottom: 0;"><small>Adhésion annuelle</small></h3>
+          <h2 style="font-size: 200%; margin-top: 0; color: #ff5722;">{{ article.cost | currency : 'AR ' }}</h2>
+        </div>
       </div>
       <div class="best">
         <h6>{{ article.description }}</h6>

@@ -7,6 +7,8 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
+JLoader::register('Smarty', JPATH_COMPONENT . '/engine/smarty/Smarty.class.php');
+JLoader::register('Engine', JPATH_COMPONENT . '/engine/Engine.php');
 JLoader::register('comDocument', JPATH_COMPONENT . '/app/inc/document.inc.php');
 JLoader::register('comOrtanaHelper', JPATH_COMPONENT . '/helpers/helper.php');
 

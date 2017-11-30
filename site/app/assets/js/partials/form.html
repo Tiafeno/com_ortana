@@ -41,7 +41,7 @@
         </div>
 
         <md-input-container flex="50" class="md-block">
-          <label>NIF/STAT</label>
+          <label>Nom de la société</label>
           <input required name="society" ng-model="ortanaform.society">
           <div ng-messages="inscriptionForm.society.$error">
             <div ng-message="required">Veuillez renseigner ce champ.</div>
@@ -56,23 +56,33 @@
           </div>
         </md-input-container>
 
-        <md-input-container class="md-block">
-          <label>Votre adresse Email</label>
-          <input required type="email" name="clientEmail" ng-model="ortanaform.clientEmail"
-                minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
-
-          <div ng-messages="inscriptionForm.clientEmail.$error" role="alert">
-            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-              Votre adresse e-mail doit comporter entre 10 et 100 caractères et ressembler à une adresse e-mail.
+        <div layout="row">
+          <md-input-container flex="50" class="md-block">
+            <label>Votre adresse Email</label>
+            <input required type="email" name="clientEmail" ng-model="ortanaform.clientEmail" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+            <div ng-messages="inscriptionForm.clientEmail.$error" role="alert">
+              <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                Votre adresse e-mail doit comporter entre 10 et 100 caractères et ressembler à une adresse e-mail.
+              </div>
             </div>
-          </div>
-        </md-input-container>
+          </md-input-container>
+
+          <md-input-container flex="50" class="md-block">
+            <label>Numero de téléphone</label>
+            <input required name="phone" ng-model="ortanaform.phone">
+            <div class="hint" style="font-size:0.8em">Numéro fixe ou portable</div>
+            <div ng-messages="inscriptionForm.phone.$error">
+              <div ng-message="required">Veuillez renseigner ce champ.</div>
+            </div>
+          </md-input-container>
+        </div>
 
         <md-input-container class="md-block">
-            <label>Description</label>
-            <input md-maxlength="250" md-no-asterisk name="description" ng-model="ortanaform.description">
+            <label>Description de votre société</label>
+            <textarea style="box-shadow: none" md-maxlength="500" name="description" ng-model="ortanaform.description"></textarea>
+            <div class="hint" style="font-size:0.8em">Ce champ est facultatif.</div>
             <div ng-messages="inscriptionForm.description.$error">
-              <div ng-message="md-maxlength">La description doit comporter moins de 250 caractères.</div>
+              <div ng-message="md-maxlength">La description doit comporter moins de 500 caractères.</div>
             </div>
           </md-input-container>
 
@@ -88,6 +98,7 @@
         </md-input-container>
 
         <div>
+          <md-progress-linear ng-show="loading" md-mode="indeterminate"></md-progress-linear>
           <md-button type="submit" class="md-raised md-primary" ng-disabled="inscriptionForm.$invalid">Envoyer ma commande</md-button>
         </div>
 
@@ -97,8 +108,14 @@
   <div flex="30">
     <md-card style="box-shadow: none">
         <md-card-content>
-          <span class="md-body-2 roboto-slab">{{ article.title }}</span>
-          <p style="font-size:.9em;">{{ article.description }}</p>
+          <span class="md-body-2 roboto-slab" style="text-transform: uppercase">{{ article.title }}</span><br>
+          <span class="md-body-2 roboto-slab" style="text-transform: uppercase; color: #ff2502; margin-top: 14px; display: block;">
+            <span style="font-size: 50px">{{ article.cost | currency:'' }}</span> Adhésion annuelle
+          </span>
+          <p style="font-size:.9em; padding-top: 7px;">{{ article.description }}</p>
+          <md-button class="md-primary flex" style="display: flex" ng-href="#!/inscription" >
+            <i class="material-icons">keyboard_return</i><span style="padding-left: 10px">Retour</span>
+          </md-button>
         </md-card-content>
       </md-card>
   </div>

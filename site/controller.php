@@ -13,8 +13,20 @@ class OrtanaController extends JControllerLegacy
     $results = $db->loadObjectList();
     echo json_encode($results);
   }
+
+  protected function getarticle( $article_id ) {
+    $db = JFactory::getDbo();
+    $query = $db->getQuery(true);
+    $query->select($db->quoteName(array('title', 'description', 'cost')))
+          ->from($db->quoteName($this->db))
+          ->where($db->quoteName('id') . " = " . $article_id);
+    $db->setQuery($query);
+    return $db->loadObject();
+  }
   
   public function sendMail() {
+    $engine = new Engine();
+
     $app = JFactory::getApplication();
     $input = $app->input;
     $firstname = $input->getString( 'firstname', '', 'STRING' );
@@ -22,17 +34,31 @@ class OrtanaController extends JControllerLegacy
     $society = $input->getString( 'society', '', 'STRING' );
     $adress = $input->getString( 'adress', '', 'STRING' );
     $mail = $input->getString( 'email', '', 'STRING' );
+    $description = $input->getString( 'description', '', 'STRING' );
+    $phone = $input->get( 'phone' );
     $article_id = $input->getInt( 'article_id' );
+    /** assign variable in template */
+    $engine->assign('firstname', $firstname);
+    $engine->assign('lastname', $lastname);
+    $engine->assign('society', $society);
+    $engine->assign('adress', $adress);
+    $engine->assign('mail', $mail);
+    $engine->assign('phone', $phone);
+    $engine->assign('description', $description);
 
-    $sender = [$mail, $firstname + ' ' + $lastname];
-    $template = @file_get_contents(JPATH_COMPONENT . '/app/inc/mail.tmpl.php');
-    $body = $template; // Fix: Use template engine
+    $article = $this->getarticle( $article_id );
+    $engine->assign('article', $article);
+
+    $sender = [$mail, $firstname . ' ' . $lastname];
+    $template = $engine->fetch( "mail.tpl" );
+
     $mailer = JFactory::getMailer();
     $mailer->isHtml(true);
     $mailer->setSender($sender);
-    $mailer->addRecipient("tiafenofnel@gmail.com");
+    $mailer->addRecipient(["tiafenofnel@gmail.com"]);
     $mailer->setSubject('Inscription - ORTANA');
-    $mailer->setBody($body);
+    $mailer->setBody($template);
+    /** sending */
     $send = $mailer->Send();
     echo json_encode($send);
   }
