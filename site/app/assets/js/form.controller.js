@@ -3,14 +3,21 @@
 ortanaForm
   .controller('ortanaCtrl', ['$scope', 'OServices', function( $scope, OServices ) {
     'use strict'
+    var bg = [
+      {background: "#e01a33"},
+      {background: "#01b7f2"},
+      {background: "#fdb714"},
+      {background: "#98ce44"}
+    ];
     $scope.articles = [];
     $scope.configs = Joomla.getOptions('com_ortana');
     /** set Articles */
     var articles = [];
     articles = _.union( JSON.parse($scope.configs.articles) );
-    $scope.articles = _.map( articles, function(article) {
+    $scope.articles = _.map( articles, function(article, index) {
       if ( ! _.isNull(article.fields))
         article.fields = article.fields.split("|");
+      article.style = bg[ _.random(0, 3) ];
       return article;
     });
     OServices.setArticlesFn( $scope.articles );

@@ -2,6 +2,7 @@
 
 var formRoute = angular.module('formRoute', [ "ngMaterial", "ngRoute" ]);
 formRoute.controller('InscriptionCtrl', ['$scope', function( $scope ) {
+  
 }]);
   /** Controller du formulaire de contact */
 formRoute.controller('FormCtrl', ['$scope', '$location', 'OServices', 'OFactory', '$mdDialog',
