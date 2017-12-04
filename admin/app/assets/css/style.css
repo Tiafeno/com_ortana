@@ -15,5 +15,18 @@ md-dialog.md-transition-in, md-dialog.md-transition-out {
 }
 
 md-list > md-list-item:nth-child(2n+1) {
-  background: #ffe4c466 !important;
+  background: rgba(247, 246, 245, 0.4) !important;
+}
+
+.ng-scope input:focus:invalid:focus, 
+.ng-scope textarea:focus:invalid:focus, 
+.ng-scope select:focus:invalid:focus {
+	box-shadow: none !important;
+}
+md-content.md-default-theme, md-content {
+	background: transparent;
+}
+
+.ng-scope textarea {
+	box-shadow: none !important;
 }
