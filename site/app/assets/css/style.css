@@ -5,3 +5,12 @@ input, button, select, textarea, .ng-scope div {
 .md-headline, .roboto-slab {
   font-family: 'Roboto Slab', serif !important;
 }
+
+.ng-scope input:focus:invalid:focus, 
+.ng-scope textarea:focus:invalid:focus, 
+.ng-scope select:focus:invalid:focus {
+	box-shadow: none !important;
+}
+md-content.md-default-theme, md-content {
+	background: transparent;
+}

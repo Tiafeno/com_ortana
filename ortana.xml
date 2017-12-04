@@ -34,6 +34,7 @@
     <folder>models</folder>
     <folder>helpers</folder>
     <folder>app</folder>
+		<folder>engine</folder>
   </files>
 
   <administration>

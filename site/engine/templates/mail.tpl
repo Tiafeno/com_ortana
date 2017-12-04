@@ -126,9 +126,7 @@
               <table style="WIDTH: 100%" cellSpacing=0 cellPadding=0 align=left>
                 <tr class=hiddentds>
                   <td style="FONT-SIZE: 0px; HEIGHT: 0px; WIDTH: 600px; LINE-HEIGHT: 0; mso-line-height-rule: exactly">
-                    <!-- MAILSTYLER 2 DEMO gxfEvPwmao0nN4psIWSIY4Fg4qE5wKXYX5lMMHAvCRFwUa MAILSTYLER 2 DEMO -->
                   </td>
-                  <!-- MAILSTYLER 2 DEMO gxfEvPwmao0nN4psIWSIY4Fg4qE5wKXYX5lMM MAILSTYLER 2 DEMO -->
                 </tr>
                 <tr style="HEIGHT: 20px">
                   <TH class=contenttd style="BORDER-TOP: medium none; BORDER-RIGHT: medium none; VERTICAL-ALIGN: middle; BORDER-BOTTOM: medium none; FONT-WEIGHT: normal; PADDING-BOTTOM: 20px; TEXT-ALIGN: left; PADDING-TOP: 20px; PADDING-LEFT: 20px; BORDER-LEFT: medium none; PADDING-RIGHT: 20px; BACKGROUND-COLOR: #f5b21d">
@@ -141,14 +139,6 @@
                           <IMG title="" border=none alt="Check It Now!" src="http://www.tourisme-antananarivo.com/images/ortana/slide/logo-ortana.png">
                         </td>
                       </tr>
-                      <!-- <tr>
-                          <td class=contenttd style="VERTICAL-ALIGN: middle; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px">
-                              <P style="FONT-SIZE: 22px; MARGIN-BOTTOM: 1em; FONT-FAMILY: arial, helvetica, sans-serif; MARGIN-TOP: 0px; COLOR: #fffeff; LINE-HEIGHT: 33px; BACKGROUND-COLOR: transparent; mso-line-height-rule: exactly"
-                              align=center>
-                              Demande d'insciption
-                            </P>
-                          </td>
-                      </tr> -->
                     </TABLE>
                     <!--[if gte mso 12]>    </td></tr></table><![endif]-->
                   </TH>
@@ -161,9 +151,7 @@
               <table style="WIDTH: 100%" cellSpacing=0 cellPadding=0 align=left>
                 <tr class=hiddentds>
                   <td style="FONT-SIZE: 0px; HEIGHT: 0px; WIDTH: 600px; LINE-HEIGHT: 0; mso-line-height-rule: exactly" colSpan=2>
-                    <!-- MAILSTYLER 2 DEMO Ceq3JOGo8iNRNpBrrRkT6ZmP MAILSTYLER 2 DEMO -->
                   </td>
-                  <!-- MAILSTYLER 2 DEMO Ceq3JOGo8iNRNpBrrRkT6ZmPEIpZ MAILSTYLER 2 DEMO -->
                 </tr>
                 <tr style="HEIGHT: 20px">
                   <TH class=contenttd style="BORDER-TOP: medium none; BORDER-RIGHT: medium none; VERTICAL-ALIGN: top; BORDER-BOTTOM: medium none; FONT-WEIGHT: normal; PADDING-BOTTOM: 20px; TEXT-ALIGN: left; PADDING-TOP: 20px; PADDING-LEFT: 15px; BORDER-LEFT: medium none; PADDING-RIGHT: 15px; BACKGROUND-COLOR: transparent"
