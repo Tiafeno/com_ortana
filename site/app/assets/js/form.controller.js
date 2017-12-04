@@ -10,7 +10,7 @@ ortanaForm
       {background: "#98ce44"}
     ];
     $scope.articles = [];
-    $scope.configs = Joomla.getOptions('com_ortana');
+    $scope.configs = Joomla.optionsStorage.com_ortana;
     /** set Articles */
     var articles = [];
     articles = _.union( JSON.parse($scope.configs.articles) );
@@ -76,7 +76,7 @@ ortanaForm
   }])
 
   .config(['$routeProvider', function( $routeProvider ) {
-    var configs = Joomla.getOptions('com_ortana');
+    var configs = Joomla.optionsStorage.com_ortana;
     $routeProvider
       .when('/inscription', {
       templateUrl: configs.assets + 'js/partials/inscription.html',
