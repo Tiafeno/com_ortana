@@ -3,11 +3,31 @@
 ortanaForm
   .controller('ortanaCtrl', ['$scope', 'OServices', function( $scope, OServices ) {
     'use strict'
-    var bg = [
-      {background: "#e01a33"},
-      {background: "#01b7f2"},
-      {background: "#fdb714"},
-      {background: "#98ce44"}
+    var colors = [
+      { 
+        shared: {background: "rgb(72, 61, 139)"}, 
+        h2: {color: "rgb(72, 61, 139)"}, 
+        aside: {border: "1px solid rgb(72, 61, 139)"},
+        list: {background: "rgba(72, 61, 139, 0.27)"} 
+      },
+      { 
+        shared: {background: "rgb(20, 84, 197)"}, 
+        h2: {color: "rgb(20, 84, 197)"}, 
+        aside: {border: "1px solid rgb(20, 84, 197)"},
+        list: {background: "rgba(20, 84, 197, 0.27)"} 
+      },
+      { 
+        shared: {background: "rgb(130, 197, 20)"}, 
+        h2: {color: "rgb(130, 197, 20)"}, 
+        aside: {border: "1px solid rgb(130, 197, 20)"},
+        list: {background: "rgba(130, 197, 20, 0.27)"} 
+      },
+      { 
+        shared: {background: "rgb(130, 23, 195)"}, 
+        h2: {color: "rgb(130, 23, 195)"}, 
+        aside: {border: "1px solid rgb(130, 23, 195)"},
+        list: {background: "rgba(130, 23, 195, 0.27)"} 
+      }
     ];
     $scope.articles = [];
     $scope.configs = Joomla.optionsStorage.com_ortana;
