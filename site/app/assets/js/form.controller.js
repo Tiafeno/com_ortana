@@ -2,7 +2,7 @@
 
 ortanaForm
   .controller('ortanaCtrl', ['$scope', 'OServices', function( $scope, OServices ) {
-    'use strict'
+    'use strict';
     var colors = [
       { 
         shared: {background: "rgb(72, 61, 139)"}, 
@@ -37,7 +37,7 @@ ortanaForm
     $scope.articles = _.map( articles, function(article, index) {
       if ( ! _.isNull(article.fields))
         article.fields = article.fields.split("|");
-      article.style = bg[ _.random(0, 3) ];
+      article.style = colors[ _.random(0, 3) ];
       return article;
     });
     OServices.setArticlesFn( $scope.articles );
