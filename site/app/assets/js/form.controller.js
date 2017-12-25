@@ -3,43 +3,44 @@
 ortanaForm
   .controller('ortanaCtrl', ['$scope', 'OServices', function( $scope, OServices ) {
     'use strict';
-    var colors = [
-      { 
-        shared: {background: "rgb(72, 61, 139)"}, 
-        h2: {color: "rgb(72, 61, 139)"}, 
-        aside: {border: "1px solid rgb(72, 61, 139)"},
-        list: {background: "rgba(72, 61, 139, 0.27)"} 
-      },
-      { 
-        shared: {background: "rgb(20, 84, 197)"}, 
-        h2: {color: "rgb(20, 84, 197)"}, 
-        aside: {border: "1px solid rgb(20, 84, 197)"},
-        list: {background: "rgba(20, 84, 197, 0.27)"} 
-      },
-      { 
-        shared: {background: "rgb(130, 197, 20)"}, 
-        h2: {color: "rgb(130, 197, 20)"}, 
-        aside: {border: "1px solid rgb(130, 197, 20)"},
-        list: {background: "rgba(130, 197, 20, 0.27)"} 
-      },
-      { 
-        shared: {background: "rgb(130, 23, 195)"}, 
-        h2: {color: "rgb(130, 23, 195)"}, 
-        aside: {border: "1px solid rgb(130, 23, 195)"},
-        list: {background: "rgba(130, 23, 195, 0.27)"} 
-      }
+    var _clr = [
+      ["#FF1744", "#FFF"], // white
+      ["#FF6D00", "#FFF"],
+      ["#9C27B0", "#FFF"], // white
+      ["#E91E63", "#FFF"], // white
+      ["#304FFE", "#FFF"], // white
+      ["#2196F3", "#000"],
+      ["#00E676", "#000"],
+      ["#FFEB3B", "#000"],
+      ["#FF5722", "#000"],
+      ["#3F51B5", "#FFF"] // white
     ];
+    var colors = [];
+    _.each(_clr, function(element, index) {
+      var _el = {};
+      _el.shared = { "background-color": element[0] };
+      _el.h2 = { color: element[0] };
+      //_el.aside = { border: "1px solid " + element[0].toString() };
+      _el.list = { "background-color": element[0], color: element[1] };
+
+      colors.push( _el );
+    });
+    
     $scope.articles = [];
     $scope.configs = Joomla.optionsStorage.com_ortana;
     /** set Articles */
     var articles = [];
+    var cpt = 0;
     articles = _.union( JSON.parse($scope.configs.articles) );
     $scope.articles = _.map( articles, function(article, index) {
       if ( ! _.isNull(article.fields))
         article.fields = article.fields.split("|");
-      article.style = colors[ _.random(0, 3) ];
+      if (colors[ cpt ] === undefined) cpt = 0;
+      article.style = colors[ cpt ];
+      cpt++;
       return article;
     });
+    console.log($scope.articles);
     OServices.setArticlesFn( $scope.articles );
   }])
   .factory('OFactory', ['$http', function( $http ) {

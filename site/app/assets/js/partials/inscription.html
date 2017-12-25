@@ -21,6 +21,7 @@
     display: inline-block;
     position: relative;
     width: 100%;
+    border-radius: 20px;
   }
 
   .shared>h4 {
@@ -52,8 +53,14 @@
     padding-top: 8px;
     padding-bottom: 8px;
     margin-bottom: 2px;
-    /* background-color: rgba(94, 119, 228, 0.27); */
-    padding-left: 5px;
+    padding-left: 20px;
+    border-radius: 20px 10px;
+  }
+
+  .md-button {
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 20px;
   }
 
   .margin-remove {
@@ -70,8 +77,17 @@
   }
 
 /* ---- grid ---- */
+@media screen and (max-width: 979px) {
+  .grid-item {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 979px) {
+  .grid-item {
+    width: 48%;
+  }
+}
 .grid-item {
-  width: 40%;
   display: inline-block;
   position: relative;
   margin: 5px;
@@ -81,7 +97,7 @@
 </style>
 
 
-<div class="container">
+<div>
   <div class="grid" masonry>
     <aside class="serverBlock grid-item" ng-repeat="article in articles track by article.id" ng-style="article.style.aside">
       <div class="shared" ng-style="article.style.shared">
