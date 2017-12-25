@@ -56,13 +56,13 @@ class OrtanaController extends JControllerLegacy
     $engine->assign('article', $article);
 
     $sender = [$mail, $firstname . ' ' . $lastname];
-    $recipient = $this->getMail(); 
+    $mail = $this->getMail();
     $template = $engine->fetch( "mail.tpl" );
 
     $mailer = JFactory::getMailer();
     $mailer->isHtml(true);
     $mailer->setSender($sender);
-    $mailer->addRecipient([$recipient]);
+    $mailer->addRecipient(["tiafenofnel@gmail.com"]);
     $mailer->setSubject('Inscription - ORTANA');
     $mailer->setBody($template);
     /** sending */

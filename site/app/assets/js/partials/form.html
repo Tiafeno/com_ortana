@@ -41,7 +41,7 @@
         </div>
 
         <md-input-container flex="50" class="md-block">
-          <label>Nom de votre établissement</label>
+          <label>Nom de la société</label>
           <input required name="society" ng-model="ortanaform.society">
           <div ng-messages="inscriptionForm.society.$error">
             <div ng-message="required">Veuillez renseigner ce champ.</div>
@@ -78,7 +78,7 @@
         </div>
 
         <md-input-container class="md-block">
-            <label>Description de votre établissement</label>
+            <label>Description de votre société</label>
             <textarea style="box-shadow: none" md-maxlength="500" name="description" ng-model="ortanaform.description"></textarea>
             <div class="hint" style="font-size:0.8em">Ce champ est facultatif.</div>
             <div ng-messages="inscriptionForm.description.$error">

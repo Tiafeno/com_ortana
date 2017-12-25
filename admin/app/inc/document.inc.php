@@ -5,7 +5,7 @@ class comDocument {
   public function __construct() {}
   private static function ngApplication() {
     /** Angularjs librarie */
-    JHtml::script(Juri::base() . 'components/com_ortana/app/lib/angular/angular.js' );
+    JHtml::script(Juri::base() . 'components/com_ortana/app/lib/angular/angular.min.js' );
     JHtml::script(Juri::base() . 'components/com_ortana/app/lib/angular-route/angular-route.min.js' );
     JHtml::script(Juri::base() . 'components/com_ortana/app/lib/angular-animate/angular-animate.min.js' );
     JHtml::script(Juri::base() . 'components/com_ortana/app/lib/angular-messages/angular-messages.min.js' );

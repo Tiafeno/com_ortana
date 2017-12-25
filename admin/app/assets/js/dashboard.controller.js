@@ -44,7 +44,7 @@ dashboard
     var editId = NaN;
     self.setConfig = function() {
       if (_.isNull( config )) 
-        return config = Joomla.optionsStorage.com_ortana;
+        return config = Joomla.getOptions( 'com_ortana' );
     };
     self.setEditArticle = function( id ) { editId = parseInt(id); };
     self.getEditId = function() { return editId; }
@@ -55,7 +55,7 @@ dashboard
   * Route configuration
   */
   .config(['$routeProvider', '$mdThemingProvider', function( $routeProvider, $mdThemingProvider ) {
-    var options = Joomla.optionsStorage.com_ortana;
+    var options = Joomla.getOptions( 'com_ortana' );
     var assets = options.assets;
     $routeProvider
       .when('/dashboard', {

@@ -23,7 +23,6 @@ md-list > md-list-item:nth-child(2n+1) {
 .ng-scope select:focus:invalid:focus {
 	box-shadow: none !important;
 }
-
 md-content.md-default-theme, md-content {
 	background: transparent;
 }
