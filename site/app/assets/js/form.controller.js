@@ -2,45 +2,24 @@
 
 ortanaForm
   .controller('ortanaCtrl', ['$scope', 'OServices', function( $scope, OServices ) {
-    'use strict';
-    var _clr = [
-      ["#FF1744", "#FFF"], // white
-      ["#FF6D00", "#FFF"],
-      ["#9C27B0", "#FFF"], // white
-      ["#E91E63", "#FFF"], // white
-      ["#304FFE", "#FFF"], // white
-      ["#2196F3", "#000"],
-      ["#00E676", "#000"],
-      ["#FFEB3B", "#000"],
-      ["#FF5722", "#000"],
-      ["#3F51B5", "#FFF"] // white
+    'use strict'
+    var bg = [
+      {background: "#e01a33"},
+      {background: "#01b7f2"},
+      {background: "#fdb714"},
+      {background: "#98ce44"}
     ];
-    var colors = [];
-    _.each(_clr, function(element, index) {
-      var _el = {};
-      _el.shared = { "background-color": element[0] };
-      _el.h2 = { color: element[0] };
-      //_el.aside = { border: "1px solid " + element[0].toString() };
-      _el.list = { "background-color": element[0], color: element[1] };
-
-      colors.push( _el );
-    });
-    
     $scope.articles = [];
-    $scope.configs = Joomla.optionsStorage.com_ortana;
+    $scope.configs = Joomla.getOptions('com_ortana');
     /** set Articles */
     var articles = [];
-    var cpt = 0;
     articles = _.union( JSON.parse($scope.configs.articles) );
     $scope.articles = _.map( articles, function(article, index) {
       if ( ! _.isNull(article.fields))
         article.fields = article.fields.split("|");
-      if (colors[ cpt ] === undefined) cpt = 0;
-      article.style = colors[ cpt ];
-      cpt++;
+      article.style = bg[ _.random(0, 3) ];
       return article;
     });
-    console.log($scope.articles);
     OServices.setArticlesFn( $scope.articles );
   }])
   .factory('OFactory', ['$http', function( $http ) {
@@ -97,7 +76,7 @@ ortanaForm
   }])
 
   .config(['$routeProvider', function( $routeProvider ) {
-    var configs = Joomla.optionsStorage.com_ortana;
+    var configs = Joomla.getOptions('com_ortana');
     $routeProvider
       .when('/inscription', {
       templateUrl: configs.assets + 'js/partials/inscription.html',
