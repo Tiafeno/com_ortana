@@ -56,7 +56,7 @@ class OrtanaController extends JControllerLegacy
     $engine->assign('article', $article);
 
     $sender = [$mail, $firstname . ' ' . $lastname];
-    $recipient = $this->getMail();
+    $recipient = $this->getMail(); 
     $template = $engine->fetch( "mail.tpl" );
 
     $mailer = JFactory::getMailer();
