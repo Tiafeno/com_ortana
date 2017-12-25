@@ -3,7 +3,6 @@
     position: relative;
     top: 3px;
     font-size: 16px;
-    color: #fff;
   }
 
   .month {
@@ -22,7 +21,7 @@
     display: inline-block;
     position: relative;
     width: 100%;
-    background: rgb(72, 61, 139);
+    border-radius: 20px;
   }
 
   .shared > h4 {
@@ -30,44 +29,38 @@
     text-align: center;
     color: white;
     font-weight: 400;
-		text-transform: uppercase;
   }
 
   .best > p {
-    font-size: 13px;
+    font-size: smaller;
     letter-spacing: 0.036em;
     line-height: 17px;
     font-family: Roboto, Helvetica Neue, sans-serif !important;
     padding-left: 20px;
     padding-right: 20px;
     font-weight: normal;
-    color: rgb(240, 248, 255);
   }
 
   .best span.field-name {
-    color: white;
     text-transform: uppercase;
     font-size: smaller;
   }
 
-  .best ul>li {
+  .best ul > li {
     list-style: none;
     margin-left: 20px;
     margin-right: 20px;
     padding-top: 8px;
     padding-bottom: 8px;
     margin-bottom: 2px;
-    background-color: rgba(67, 71, 71, 0.2);
-    padding-left: 5px;
+    padding-left: 20px;
+    border-radius: 20px 10px;
   }
 
-  md-content aside {
-    display: block;
-    margin-right: 20px;
-    float: left;
-    margin-top: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+  .md-button {
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 20px;
   }
 
   .margin-remove {
@@ -80,64 +73,60 @@
   h4 small,
   h5 small,
   h6 small {
-    color: rgb(225, 221, 221);
+    color: rgb(98, 98, 98);
   }
-	.grid-item { width: 390px; }
-	.grid-item--width2 { width: 780px; display: inline-block; }
-	/* ---- grid ---- */
 
-.grid {
-  position: relative;
+/* ---- grid ---- */
+@media screen and (max-width: 979px) {
+  .grid-item {
+    width: 100%;
+  }
 }
-
-/* clearfix */
-.grid:after {
-  content: '';
-  display: block;
-  clear: both;
+@media screen and (min-width: 979px) {
+  .grid-item {
+    width: 48%;
+  }
 }
-
-/* ---- grid-item ---- */
-
 .grid-item {
   display: inline-block;
+  position: relative;
+  margin: 5px;
 }
+
 
 </style>
 
 
-<md-content class="md-padding" layout-xs="column" layout="row">
-  <div class="grid">
-		<div class="grid-item" ng-repeat="article in articles track by article.id">
-			<aside class="serverBlock" ng-style="article.style">
-				<div class="shared">
-					<h4>{{ article.title }}</h4>
-				</div>
-				<div class="month">
-					<div class="monthBlock">
-						<h3 style="text-align: right; margin-bottom: 0;">
-							<small>Adhésion annuelle</small>
-						</h3>
-						<h2 style="font-size: 200%; margin-top: 0; color: #fffdfc;">{{ article.cost | currency : 'AR ' }}</h2>
-					</div>
-				</div>
-				<div class="best">
-					<p>{{ article.description }}</p>
-					<ul class="margin-remove">
-						<li ng-repeat="field in article.fields">
-							<span class="flaticon-checked8">
-								<i class="material-icons">done</i>
-							</span>
-							<span class="field-name">{{ field }}</span>
-						</li>
-					</ul>
-					<div style="margin-top: 30px">
-						<md-button class="md-raised md-warn" style="margin: auto; display: block" choose-article="{{ article.id }}">
-							Commander
-						</md-button>
-					</div>
-				</div>
-			</aside>
-		</div>
+<div>
+  <div class="grid" masonry>
+    <aside class="serverBlock grid-item" ng-repeat="article in articles track by article.id" ng-style="article.style.aside">
+      <div class="shared" ng-style="article.style.shared">
+        <h4 >{{ article.title }}</h4>
+      </div>
+      <div class="month">
+        <div class="monthBlock">
+          <h3 style="text-align: right; margin-bottom: 0;">
+            <small>Adhésion annuelle</small>
+          </h3>
+          <h2 style="font-size: 200%; margin-top: 0" ng-style="article.style.h2">{{ article.cost | currency : 'AR ' }}</h2>
+        </div>
+      </div>
+      <div class="best">
+        <p>{{ article.description }}</p>
+        <ul class="margin-remove">
+          <li ng-repeat="field in article.fields" ng-style="article.style.list">
+            <span class="flaticon-checked8">
+              <i class="material-icons">done</i>
+            </span>
+            <span class="field-name">{{ field }}</span>
+          </li>
+        </ul>
+        <div style="margin-top: 30px; margin-bottom: 25px;">
+          <md-button class="md-raised md-warn" style="margin: auto; display: block" ng-style="article.style.shared" choose-article="{{ article.id }}">
+            Commander
+          </md-button>
+        </div>
+      </div>
+    </aside>
   </div>
-</md-content>
+</div>
