@@ -4,7 +4,7 @@ class OrtanaViewDashboard extends JViewLegacy
   function display($tpl = null)
   {
     $document = JFactory::getDocument();
-    /* Mootools JavaScript Framework */
+    /* Core JavaScript Framework */
     JHtml::_('behavior.framework');
     /* Include native jquery libaries */
     JHtml::_('jquery.framework');

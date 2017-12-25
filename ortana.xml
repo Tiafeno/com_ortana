@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="3.0" method="upgrade">
+<extension type="component" version="3.6" method="upgrade">
 
   <name>ORTANA</name>
   <creationDate>Novembre 2017</creationDate>
@@ -8,7 +8,7 @@
   <authorUrl>http://www.falicrea.com</authorUrl>
   <copyright>Copyright 2017, ORTANA</copyright>
   <license>Apache License 2.0</license>
-  <version>1.1.5</version>
+  <version>1.1.6</version>
   <description>Référencement payant des établissements touristiques d’Analamanga (Hôtel, restaurant, pub-bar- lounge)</description>
 
   <install> <!-- Runs on install -->

@@ -21,7 +21,6 @@ abstract class comDocument {
     JHtml::script(Juri::base() . 'components/com_ortana/app/libs/underscore/underscore-min.js');
     /** bluebird librarie */
     JHtml::script(Juri::base() . 'components/com_ortana/app/libs/bluebird/bluebird.min.js');
-		JHtml::script(Juri::base() . 'components/com_ortana/app/libs/masonry/masonry.pkgd.min.js');
     /** angular framwork */
     self::ngApplication();
     JHtml::stylesheet(Juri::base() . 'components/com_ortana/app/assets/css/style.css' );
